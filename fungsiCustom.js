@@ -23,24 +23,26 @@ const bacaData = (fnCallback) =>{
   fs.readFile(file1, (err, data) => {
     if (err) throw err;
     let data1 = JSON.parse(data);
-    return data1.message.split(" ")[1];
+    const result1 = data1.message.split(" ")[1];
+    baca.push(result1);
   });
   
   fs.readFile(file2, (err, data) => {
       if (err) throw err;
       let data2 = JSON.parse(data);
-      return data2[0].message.split(" ")[1];
+      const result2 = data2[0].message.split(" ")[1];
+      baca.push(result2);
     });
   
   fs.readFile(file3, (err, data) => {
       if (err) throw err;
       let data3 = JSON.parse(data);
-      return data3[0].data.message.split(" ")[1];
+      const result3 = data3[0].data.message.split(" ")[1];
+      baca.push(result3);
     });
 
     fnCallback(null, baca);
 };
-
 // ! JANGAN DIMODIFIKASI
 module.exports = {
   modifyFile1,
