@@ -18,31 +18,37 @@ let modifyFile3 = (val) => {
 
 // TODO: Kerjakan bacaData
 // gunakan variabel file1, file2, dan file3
-const bacaData = (fnCallback) =>{
-  let baca = [];
-  fs.readFile(file1, (err, data) => {
-    if (err) throw err;
-    let data1 = JSON.parse(data);
-    const result1 = data1.message.split(" ")[1];
-    baca.push(result1);
+const bacaData = (fnCallback) => {
+  let temp = []
+  fs.readFile(file2,'utf8', (err, data) => {
+    if (err) fnCallback(err,null);
+    temp.push(jsonType2(data))
+  fs.readFile(file1,'utf8', (err, data) => {
+    if (err) fnCallback(err,null);
+    temp.push(jsonType1(data))
+  fs.readFile(file3,'utf8', (err, data) => {
+    if (err) fnCallback(err,null);
+    temp.push(jsonType3(data))
+    
+    fnCallback(null, temp);
   });
-  
-  fs.readFile(file2, (err, data) => {
-      if (err) throw err;
-      let data2 = JSON.parse(data);
-      const result2 = data2[0].message.split(" ")[1];
-      baca.push(result2);
-    });
-  
-  fs.readFile(file3, (err, data) => {
-      if (err) throw err;
-      let data3 = JSON.parse(data);
-      const result3 = data3[0].data.message.split(" ")[1];
-      baca.push(result3);
-    });
-
-    fnCallback(null, baca);
+  });
+});
 };
+const jsonType1 = (j) => {
+    let obj = JSON.parse(j);
+    return (obj.message.split(" ")[1]);
+}
+
+const jsonType2 = (j) => {
+  let obj = JSON.parse(j);
+  return (obj[0].message.split(" ")[1]);
+}
+
+const jsonType3 = (j) => {
+  let obj = JSON.parse(j);
+  return (obj[0].data.message.split(" ")[1]);
+}
 // ! JANGAN DIMODIFIKASI
 module.exports = {
   modifyFile1,
